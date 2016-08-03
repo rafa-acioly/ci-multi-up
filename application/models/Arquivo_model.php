@@ -19,10 +19,10 @@ class Arquivo_model extends CI_Model
 		return !empty($result)?$result:false;
 	}
 	
-	public function insert($data = array())
+	public function insert(Array $data)
 	{
 		$insert = $this->db->insert_batch('files', $data);
-		return $insert?true:false;
+		return $insert->result();
 	}
 	
 }

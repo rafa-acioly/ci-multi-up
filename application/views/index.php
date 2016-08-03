@@ -42,7 +42,11 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="col-lg-12">
-                    <p><?php echo $this->session->flashdata('statusMsg'); ?></p>
+                    <?php if ($this->session->flashdata('statusMsg')): ?>
+                    <div class="alert">
+                        <?= $this->session->flashdata('statusMsg'); ?>
+                    </div>
+                    <?php endif; ?>
                 </div>
                 <form enctype="multipart/form-data" action="" method="post">
                 <div class="col-lg-6">

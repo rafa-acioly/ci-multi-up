@@ -1310,5 +1310,22 @@ class CI_Upload {
 
 		$this->file_type = $file['type'];
 	}
+	
+	// --------------------------------------------------------------------
 
+	/**
+	 * File MIME type
+	 *
+	 * Detects if the $key on $_FILES exist.
+	 *
+	 * @param	string	$key
+	 * @return	bool
+	 */
+	 public function hasFile($key)
+	 {
+	 	if (!isset($_FILES[$key]['name'])) {
+	 		return FALSE;
+	 	}
+	 	return TRUE;
+	 }
 }
