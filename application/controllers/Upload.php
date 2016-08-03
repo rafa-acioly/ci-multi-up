@@ -2,20 +2,42 @@
 
 class Upload extends CI_Controller
 {
+	/**
+	 * 
+	 * Storage the encrypt name of files 
+	 * 
+	 */
+	public $fileNames = [];
+	
+	/**
+	 * 
+	 * Define the key sended on $_FILES
+	 *
+	 */
+	public $key = 'userFile';
+	
+	
+	/**
+	 * 
+	 * Define the messages for sessions
+	 * 
+	 */
 	public $alert = [
 			'success' => 'All file uploaded successfully',
 			'error' => 'Sorry something gone wrong with upload, please contact the admin',
 			'fatal' => '',
 		];
-		
+	
+	/**
+	 * 
+	 * Set the configuration for uploaded files
+	 * 
+	 */ 
 	public $configuration = [
 			'upload_path' => 'uploads/file/',
 			'allowed_types' => 'gif|jpg|png',
 			'encrypt_name' => TRUE
 		];
-	
-	public $fileNames = [];
-	
 	
 	public function  __construct() 
 	{
@@ -25,27 +47,29 @@ class Upload extends CI_Controller
 		$this->load->helper(['form', 'url']);
 	}
 	
-	
+	/**
+	 * 
+	 * Call the main view
+	 * 
+	 */
 	public function index()
 	{
 
 		$this->load->view('index');
 	}
 	
-	/*
-	* Função de entrada dos dados
-	* 
-	* @return void
-	*/
+	/**
+	 * 
+	 * Perform loop to upload files if any key is defined
+	 * 
+	 */
 	public function config_upload()
 	{
 		$data = array();
-		var_dump($this->upload->hasFile('userFile'));
-		die();
-		if ($this->upload->hasFile('userFile')) {
+		if ($this->upload->hasFile($this->key)) {
 			
-			$filesCount = count($_FILES['userFiles']['name']);
-			$files = $_FILES['userFile'];
+			$filesCount = count($_FILES[$this->key]['name']);
+			$files = $_FILES[$this->key];
 			
 			for($i = 0; $i < $filesCount; $i++){
 				$_FILES['userFile']['name'] = $files['name'][$i];
@@ -70,8 +94,9 @@ class Upload extends CI_Controller
 		$this->session->set_flashdata('statusMsg', $this->alert["success"]);
 		$this->load->view('index');
 	}
-	/*
-	* Realiza o upload dos arquivos (1 por vez)
+	/**
+	* Save the files on folder 
+	* push a new key with the encrypted file's name to array
 	*
 	* @return bool
 	*/
@@ -83,7 +108,7 @@ class Upload extends CI_Controller
 			return FALSE;
 		}
 		
-		// Salva o nome do arquivo em um array para ser salvo no banco posteriormente
+		// Save file's name in array to store in database
 		array_push($this->fileNames, $this->upload->data('file_name')); 
 		return TRUE;
 	}
