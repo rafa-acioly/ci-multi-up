@@ -17,6 +17,9 @@ index e69de29..e676d61 100644
 +    enabled: true
 +  phpmd:
 +    enabled: true
+   checks:
+     Identical code:
+       enabled: false
 +ratings:
 +  paths:
 +  - "**.inc"
