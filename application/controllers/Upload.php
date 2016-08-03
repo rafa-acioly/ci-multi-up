@@ -21,7 +21,15 @@ class Upload extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->model('arquivo_model');
-		$this->load->library('upload');
+		$this->load->library(['upload']);
+		$this->load->helper(['form', 'url']);
+	}
+	
+	
+	public function index()
+	{
+
+		$this->load->view('index');
 	}
 	
 	/*
@@ -29,9 +37,11 @@ class Upload extends CI_Controller
 	* 
 	* @return void
 	*/
-	public function index(){
-
+	public function config_upload()
+	{
 		$data = array();
+		var_dump($this->upload->hasFile('userFile'));
+		die();
 		if ($this->upload->hasFile('userFile')) {
 			
 			$filesCount = count($_FILES['userFiles']['name']);
@@ -46,7 +56,7 @@ class Upload extends CI_Controller
 
 				//TODO: Verificar nesta etapa se todos os arquivos enviados estao sendo validados pela função do_upload.
 				if (!$this->do_upload()) {
-					log_message($this->upload->display_errors().": ". date('d/m/Y H:m:s')); // salva um registro no arquivo de log com o erro.
+					log_message($this->upload->display_errors().": ".date('d/m/Y H:m:s')); // salva um registro no arquivo de log com o erro.
 					$this->session->set_flashdata('statusMsg', $this->alert["error"]);
 					$this->load->view('index');
 				}
@@ -60,7 +70,6 @@ class Upload extends CI_Controller
 		$this->session->set_flashdata('statusMsg', $this->alert["success"]);
 		$this->load->view('index');
 	}
-	
 	/*
 	* Realiza o upload dos arquivos (1 por vez)
 	*

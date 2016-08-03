@@ -43,22 +43,22 @@
             <div class="col-lg-12">
                 <div class="col-lg-12">
                     <?php if ($this->session->flashdata('statusMsg')): ?>
-                    <div class="alert">
+                    <div class="alert alert-info">
                         <?= $this->session->flashdata('statusMsg'); ?>
                     </div>
                     <?php endif; ?>
                 </div>
-                <form enctype="multipart/form-data" action="" method="post">
+                <?= form_open_multipart('upload/config_upload');?>
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label>Escolha os arquivos</label>
                         <input type="file" class="form-control" name="userFiles[]" multiple required />
                     </div>
                     <div class="form-group">
-                        <input class="form-control btn btn-success" type="submit" name="fileSubmit" value="ENVIAR"/>
+                        <input class="form-control btn btn-success" type="submit" value="ENVIAR"/>
                     </div>
                 </div>
-                </form>
+                <?= form_close(); ?>
             </div>
             <div class="col-lg-12">
                 <div class="row">
