@@ -1,7 +1,4 @@
-# Upload Multiplo de Imagens - Codeigniter
-Codeigniter :::::: Upload de várias imagens simultaneamente.
-
-
+# Multiplo upload com CI v3.+
 
 ## Como usar
 
