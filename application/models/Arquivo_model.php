@@ -2,6 +2,13 @@
 
 class Arquivo_model extends CI_Model
 {
+	public $date;
+	
+	public function __construct()
+	{
+		$this->load->database();
+		$this->date = date('d/m/Y');
+	}
 
 	public function getRows($id = '')
 	{
@@ -21,8 +28,16 @@ class Arquivo_model extends CI_Model
 	
 	public function insert(Array $data)
 	{
+		array_push($data, ['created' => $this->date]);
 		$insert = $this->db->insert_batch('files', $data);
 		return $insert->result();
 	}
 	
+	public function update(Array $data, $id)
+	{
+		array_push($data, ['updated_at' => $this->date]);
+		$this->db->set($data);
+		$this->db->where('id', $id);
+		$update = $this->db->update('files');
+	}
 }

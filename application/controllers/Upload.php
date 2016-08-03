@@ -61,7 +61,6 @@ class Upload extends CI_Controller
 		$this->load->view('index');
 	}
 	
-	
 	/*
 	* Realiza o upload dos arquivos (1 por vez)
 	*
