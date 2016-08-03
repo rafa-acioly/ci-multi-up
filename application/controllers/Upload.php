@@ -72,11 +72,11 @@ class Upload extends CI_Controller
 			$files = $_FILES[$this->key];
 			
 			for($i = 0; $i < $filesCount; $i++){
-				$_FILES['userFile']['name'] = $files['name'][$i];
-				$_FILES['userFile']['type'] = $files['type'][$i];
-				$_FILES['userFile']['tmp_name'] = $files['tmp_name'][$i];
-				$_FILES['userFile']['error'] = $files['error'][$i];
-				$_FILES['userFile']['size'] = $files['size'][$i];
+				$_FILES[$this->key]['name'] = $files['name'][$i];
+				$_FILES[$this->key]['type'] = $files['type'][$i];
+				$_FILES[$this->key]['tmp_name'] = $files['tmp_name'][$i];
+				$_FILES[$this->key]['error'] = $files['error'][$i];
+				$_FILES[$this->key]['size'] = $files['size'][$i];
 
 				//TODO: Verificar nesta etapa se todos os arquivos enviados estao sendo validados pela função do_upload.
 				if (!$this->do_upload()) {
@@ -104,7 +104,7 @@ class Upload extends CI_Controller
 	{
 		$this->upload->initialize($this->configuration);
 		
-		if (!$this->upload->do_upload('userFile')) {
+		if (!$this->upload->do_upload($this->key)) {
 			return FALSE;
 		}
 		
