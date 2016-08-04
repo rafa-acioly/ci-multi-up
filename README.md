@@ -10,7 +10,7 @@
 Crie um formulario direcionando os dados para a classe `upload` usando a função `config_upload`
 
 ```PHP
-<?php form_open_multipart('upload/config_upload'); ?>
+<?php form_open_multipart('upload/do_upload'); ?>
   <input type="file" name="userFile[]" multiple />
   <input type="submit" value="Enviar" />
 <?php form_close(); ?>
