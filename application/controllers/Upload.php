@@ -63,7 +63,7 @@ class Upload extends CI_Controller
 	 * Perform loop to upload files if any key is defined
 	 * 
 	 */
-	public function config_upload()
+	public function do_upload()
 	{
 		$data = array();
 		if ($this->upload->hasFile($this->key)) {
@@ -79,7 +79,7 @@ class Upload extends CI_Controller
 				$_FILES[$this->key]['size'] = $files['size'][$i];
 
 				//TODO: Verificar nesta etapa se todos os arquivos enviados estao sendo validados pela função do_upload.
-				if (!$this->do_upload()) {
+				if (!$this->save_files()) {
 					log_message($this->upload->display_errors().": ".date('d/m/Y H:m:s')); // salva um registro no arquivo de log com o erro.
 					$this->session->set_flashdata('statusMsg', $this->alert["error"]);
 					$this->load->view('index');
@@ -100,7 +100,7 @@ class Upload extends CI_Controller
 	*
 	* @return bool
 	*/
-	public function do_upload()
+	public function save_files()
 	{
 		$this->upload->initialize($this->configuration);
 		
