@@ -65,7 +65,6 @@ class Upload extends CI_Controller
 	 */
 	public function do_upload()
 	{
-		$data = array();
 		if ($this->upload->hasFile($this->key)) {
 			
 			$filesCount = count($_FILES[$this->key]['name']);
