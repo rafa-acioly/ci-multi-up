@@ -1,5 +1,7 @@
 # Multiplo upload com CI v3.+
 
+[![Code Climate](https://codeclimate.com/github/rafa-acioly/multiple-upload-CI/badges/gpa.svg)](https://codeclimate.com/github/rafa-acioly/multiple-upload-CI)
+
 ## Como usar
 
 1. Copie o [arquivo Controller](https://github.com/rafa-acioly/multiple-upload-CI/blob/master/application/controllers/Upload.php) para sua pasta de controllers.
