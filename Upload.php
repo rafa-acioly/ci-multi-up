@@ -5,14 +5,14 @@ class Upload extends CI_Controller
 	/**
 	 * 
 	 * Storage the encrypt name of files 
-	 * 
+	 * @type array
 	 */
 	public $fileNames = [];
 	
 	/**
 	 * 
 	 * Define the key sended on $_FILES
-	 *
+	 * @type string
 	 */
 	public $key = 'userFile';
 	
@@ -20,7 +20,7 @@ class Upload extends CI_Controller
 	/**
 	 * 
 	 * Define the messages for sessions
-	 * 
+	 * @type array
 	 */
 	public $alert = [
 			'success' => 'All file uploaded successfully',
@@ -31,7 +31,7 @@ class Upload extends CI_Controller
 	/**
 	 * 
 	 * Set the configuration for uploaded files
-	 * 
+	 * @type array
 	 */ 
 	public $configuration = [
 			'upload_path' => 'uploads/file/',
@@ -39,6 +39,12 @@ class Upload extends CI_Controller
 			'encrypt_name' => TRUE
 		];
 	
+	
+	/**
+	 * 
+	 * Load the main modules to use form and url on the view
+	 * 
+	 */ 
 	public function  __construct() 
 	{
 		parent::__construct();
@@ -85,14 +91,22 @@ class Upload extends CI_Controller
 				}
 			}
 		}
-		if (!$this->arquivo_model->insert($this->fileNames)) {
+		
+		
+		/**
+		 * Set your model and function to save the file's name in database
+		 */
+		if (!$this->YOUR_MODEL->YOUR_FUNCTION($this->fileNames)) {
 			$this->session->set_flashdata('statusMsg', $this->alert["error"]);
 			$this->load->view('index');
 		}
 		
+		
 		$this->session->set_flashdata('statusMsg', $this->alert["success"]);
 		$this->load->view('index');
 	}
+	
+	
 	/**
 	* Save the files on folder 
 	* push a new key with the encrypted file's name to array
