@@ -9,13 +9,6 @@ class Upload extends CI_Controller
 	 */
 	public $fileNames = [];
 	
-	/**
-	 * 
-	 * Define the key sended on $_FILES
-	 * @type string
-	 */
-	public $key = 'userFile';
-	
 	
 	/**
 	 * 
@@ -25,8 +18,9 @@ class Upload extends CI_Controller
 	public $alert = [
 			'success' => 'All file uploaded successfully',
 			'error' => 'Sorry something gone wrong with upload, please contact the admin',
-			'fatal' => '',
+			'fatal' => 'Could not upload the files',
 		];
+	
 	
 	/**
 	 * 
@@ -64,6 +58,7 @@ class Upload extends CI_Controller
 		$this->load->view('index');
 	}
 	
+	
 	/**
 	 * 
 	 * Perform loop to upload files if any key is defined
@@ -71,27 +66,9 @@ class Upload extends CI_Controller
 	 */
 	public function do_upload()
 	{
-		if ($this->upload->hasFile($this->key)) {
-			
-			$filesCount = count($_FILES[$this->key]['name']);
-			$files = $_FILES[$this->key];
-			
-			for($i = 0; $i < $filesCount; $i++){
-				$_FILES[$this->key]['name'] = $files['name'][$i];
-				$_FILES[$this->key]['type'] = $files['type'][$i];
-				$_FILES[$this->key]['tmp_name'] = $files['tmp_name'][$i];
-				$_FILES[$this->key]['error'] = $files['error'][$i];
-				$_FILES[$this->key]['size'] = $files['size'][$i];
-
-				//TODO: Verificar nesta etapa se todos os arquivos enviados estao sendo validados pela função do_upload.
-				if (!$this->save_files()) {
-					log_message($this->upload->display_errors().": ".date('d/m/Y H:m:s')); // salva um registro no arquivo de log com o erro.
-					$this->session->set_flashdata('statusMsg', $this->alert["error"]);
-					$this->load->view('index');
-				}
-			}
+		if (!$this->validateFiles('userFile')) {
+			throw new Exception($this->alert['fatal'].' '.$this->upload->display_errors(), 1);
 		}
-		
 		
 		/**
 		 * Set your model and function to save the file's name in database
@@ -101,9 +78,51 @@ class Upload extends CI_Controller
 			$this->load->view('index');
 		}
 		
-		
 		$this->session->set_flashdata('statusMsg', $this->alert["success"]);
 		$this->load->view('index');
+	}
+	
+	
+	/**
+	 * 
+	 * Validate files given on the key
+	 * @param string $key
+	 * @return bool
+	 */ 
+	public function validateFiles($key)
+	{
+		if ($this->hasFile($key)) {
+			
+			$filesCount = count($_FILES[$key]['name']);
+			$files = $_FILES[$key];
+			
+			for($i = 0; $i < $filesCount; $i++){
+				$_FILES[$key]['name'] = $files['name'][$i];
+				$_FILES[$key]['type'] = $files['type'][$i];
+				$_FILES[$key]['tmp_name'] = $files['tmp_name'][$i];
+				$_FILES[$key]['error'] = $files['error'][$i];
+				$_FILES[$key]['size'] = $files['size'][$i];
+
+				//TODO: Verificar nesta etapa se todos os arquivos enviados estao sendo validados pela função do_upload.
+				if (!$this->saveFiles($key)) {
+					// salva um registro no arquivo de log com o erro.
+					log_message($this->upload->display_errors().": ".date('d/m/Y H:m:s'));
+					return FALSE;
+				}
+			}
+		}
+		return TRUE;
+	}
+	
+	/**
+	 * 
+	 * Check if there is a key defined on $_FILES
+	 * @param string $key
+	 * @return bool
+	 */ 
+	public function hasFile($key)
+	{
+		return isset($_FILES[$key]);
 	}
 	
 	
@@ -113,15 +132,15 @@ class Upload extends CI_Controller
 	*
 	* @return bool
 	*/
-	public function save_files()
+	public function saveFiles()
 	{
 		$this->upload->initialize($this->configuration);
 		
-		if (!$this->upload->do_upload($this->key)) {
+		if (!$this->upload->do_upload($key)) {
 			return FALSE;
 		}
 		
-		// Save file's name in array to store in database
+		// Save file's name in array
 		array_push($this->fileNames, $this->upload->data('file_name')); 
 		return TRUE;
 	}
