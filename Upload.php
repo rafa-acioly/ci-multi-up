@@ -36,7 +36,7 @@ class MY_Upload
      * @var array
      */
     public $configuration = [
-            'upload_path' => 'uploads/files/',
+            'upload_path' => '',
             'allowed_types' => 'gif|jpg|png',
             'encrypt_name' => true,
         ];
@@ -44,9 +44,10 @@ class MY_Upload
     /**
      * Load the main modules to use form and url on the view.
      */
-    public function __construct($key)
+    public function __construct($key, $upload_path)
     {
         $this->key = $key;
+        $this->configuration['upload_path'] = $upload_path;
         $this->ci =& get_instance();
     }
     

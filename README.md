@@ -13,7 +13,7 @@ class YourClasse extends CI_Controller
 ```
 3. Defina a chave usada em `$_FILES`
 ```php
-$upload = new MY_Upload('yourKey');
+$upload = new MY_Upload('yourKey', 'your_upload_path');
 $upload->start(); // Inicia o upload
 $upload->fileNames; // Array com os nomes dos arquivos
 ```
@@ -26,7 +26,7 @@ $upload->fileNames; // Array com os nomes dos arquivos
 ## Opcional
 
 - Todos os nomes dos arquivos salvos serão armazenados em `$upload->fileNames`
-- Altere configurações com `$upload->configuration['upload_path] = 'my_path_to_folter'`
+- Altere configurações com `$upload->configuration['upload_path] = 'your_upload_path'`
   - upload_path   (string)
   - allowed_types (string: 'gif|jpg|jpeg...')
   - encrypt_name  (true ou false)
