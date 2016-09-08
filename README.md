@@ -1,5 +1,9 @@
 # Multiplo upload com CI v3.+
-
+<p>
+  <a href="https://github.com/rafa-acioly/ci-multi-up/releases">
+    <img src="https://img.shields.io/github/release/rafa-acioly/ci-multi-up.svg" alt="Release">
+  </a>
+</p>
 ## Como usar
 
 1. Copie ou mova o arquivo MY_Upload para a pasta controllers `(application/controllers)`
@@ -15,6 +19,7 @@ class YourClasse extends CI_Controller
 ```php
 $upload = new MY_Upload('yourKey', 'your_upload_path');
 ```
+
 4. Inicie o upload
 ```php
 $upload->start(); // Inicia o upload
