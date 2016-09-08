@@ -14,8 +14,10 @@ class YourClasse extends CI_Controller
 3. Defina a chave usada em `$_FILES`
 ```php
 $upload = new MY_Upload('yourKey', 'your_upload_path');
+```
+4. Inicie o upload
+```php
 $upload->start(); // Inicia o upload
-$upload->fileNames; // Array com os nomes dos arquivos
 ```
 
 ## Default
