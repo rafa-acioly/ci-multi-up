@@ -15,6 +15,7 @@ class YourClasse extends CI_Controller
 {
   ...
 ```
+
 3. Defina a chave usada em `$_FILES`
 ```php
 $upload = new MY_Upload('yourKey', 'your_upload_path');
