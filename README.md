@@ -6,8 +6,8 @@
 </p>
 ## Como usar
 
-1. Copie ou mova o arquivo MY_Upload para a pasta controllers `(application/controllers)`
-2. Inclua a classe em seu controller
+Copie ou mova o arquivo MY_Upload para a pasta controllers `(application/controllers)`
+Inclua a classe em seu controller
 ```php
 require_once (dirname(__FILE__) . '/MY_Upload.php');
 
@@ -16,16 +16,22 @@ class YourClasse extends CI_Controller
   ...
 ```
 
-3. Defina a chave usada em `$_FILES`
+Defina a chave usada em `$_FILES`
 ```php
 $upload = new MY_Upload('yourKey', 'your_upload_path');
 ```
 
-4. Inicie o upload
+Inicie o upload
 ```php
-$upload->start(); // Inicia o upload
+$upload->initialize();
 ```
 
+Caso o upload não ocorra o erro será armazenado em: `$upload->messageError`
+```php
+if (!$upload->initialize()) {
+  echo $upload->messageError;
+}
+```
 ## Default
 
 - Arquivos permitidos gif, png e jpg
@@ -33,12 +39,18 @@ $upload->start(); // Inicia o upload
 
 ## Opcional
 
-- Todos os nomes dos arquivos salvos serão armazenados em `$upload->fileNames`
 - Altere configurações com `$upload->configuration['upload_path] = 'your_upload_path'`
   - upload_path   (string)
   - allowed_types (string: 'gif|jpg|jpeg...')
   - encrypt_name  (true ou false)
 
-## Como salvar no BD?
+## Como salvar os nomes dos arquivos no BD?
 
-O atributo `$this->fileNames` tera todos os nomes dos arquivos salvos na pasta.
+O atributo `fileNames` tera todos os nomes dos arquivos salvos na pasta.
+```php
+var_dump($upload->fileNames);
+// Array ["fileencryptname.jpg", "fileencryptname.png", "fileencryptname.gif"];
+// As extensões dos arquivos vão ser as mesmas do arquivo enviado para upload
+
+$this->your_model->your_function($upload->fileNames);
+```
