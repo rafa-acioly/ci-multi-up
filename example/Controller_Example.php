@@ -3,7 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 require_once (dirname(__FILE__) . '/MY_Upload.php');
 
 
-class ContentController extends CI_Controller
+class Controller_Example extends CI_Controller
 {
     public $alert = [
             'success' => 'Upload complete.',
