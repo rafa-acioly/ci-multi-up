@@ -6,6 +6,8 @@
 </p>
 ## Como usar
 
+[Exemplo de uso](https://github.com/rafa-acioly/ci-multi-up/tree/master/example)
+
 Copie ou mova o arquivo MY_Upload para a pasta controllers `(application/controllers)`
 Inclua a classe em seu controller
 ```php
