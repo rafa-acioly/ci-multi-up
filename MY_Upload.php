@@ -57,6 +57,7 @@ class MY_Upload
     
     /**
      * Perform loop to upload files if any key is defined.
+     * 
      */
     public function initialize()
     {
@@ -74,7 +75,6 @@ class MY_Upload
     /**
      * Check if there is a key defined on $_FILES.
      *
-     * @param string $key
      *
      * @return bool
      */
